@@ -1,0 +1,67 @@
+#!/bin/bash
+
+
+#Redirect output to stderr.
+exec 1>&2
+
+# Color codes
+red=`tput setaf 1`
+green=`tput setaf 2`
+blue=`tput setaf 4`
+reset=`tput sgr0`
+
+keywords=(print_r var_dump console\.log)
+
+#put key words together fro grep
+keywords_for_grep=$(printf "|%s" "${keywords[@]}")
+keywords_for_grep=${keywords_for_grep:1}
+
+#debugging error counter
+debug_found=0
+
+
+# Ignore the following files.
+exclude_dir_and_ext='\/features\/|\/contrib\/|\/devel\/|\/libraries\/|\/vendor\/|\.info$|\.png$|\.gif$|\.jpg$|\.ico$|\.patch$|\.htaccess$|\.sh$|\.ttf$|\.woff$|\.eot$|\.svg$'
+
+# Check for debugging functions
+# List all files added to commit excluding the exceptions
+files_changed=`git diff-index --diff-filter=ACMRT --cached --name-only HEAD -- | egrep -v $exclude_dir_and_ext`
+
+if [ -n "$files_changed" ]
+then
+  for FILE in $files_changed ; do
+    for keyword in "${keywords[@]}" ; do
+      # find the pattern
+      pattern="^\+(.*)?$keyword(.*)?"
+      result_for_file=`git diff --cached $FILE | egrep -x "$pattern"`
+      if [ ! -z "$result_for_file" ]
+      then
+        if [ $debug_found -eq 0 ]
+        then
+          echo "${red}"
+          echo "# Debugging function(s):"
+          echo "------------------------${reset}"
+        fi  
+	      debug_found=1
+        echo "Debugging function" $keyword
+        git grep -n $keyword $FILE | awk '{split($0,a,":");
+          printf "\tfound in " a[1] " on line " a[2] "\n";
+        }'
+      fi
+    done
+  done
+fi
+
+errors_found=$((debug_found))
+#stop the commit
+if [ $errors_found -eq 0 ]
+then
+  echo "${green}"
+  echo "Your Code is clean from debug and has been committed"
+  echo "${reset}"
+else
+  echo "${red}"
+  echo "degugging found - please fix before commiting"
+  echo "${reset}"
+  exit 1
+fi
