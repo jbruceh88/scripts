@@ -18,7 +18,6 @@ keywords_for_grep=${keywords_for_grep:1}
 #debugging error counter
 debug_found=0
 
-
 # Ignore the following files.
 exclude_dir_and_ext='\/features\/|\/contrib\/|\/devel\/|\/libraries\/|\/vendor\/|\.info$|\.png$|\.gif$|\.jpg$|\.ico$|\.patch$|\.htaccess$|\.sh$|\.ttf$|\.woff$|\.eot$|\.svg$'
 
