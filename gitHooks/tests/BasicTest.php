@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 
 class BasictTest extends TestCase
-{
+
     public function testName()
     {
       $name = 'Jason';
