@@ -11,7 +11,7 @@ reset=`tput sgr0`
 
 keywords=(print_r var_dump console\.log)
 
-#put key words together fro grep
+#put key words together for grep
 keywords_for_grep=$(printf "|%s" "${keywords[@]}")
 keywords_for_grep=${keywords_for_grep:1}
 
