@@ -21,3 +21,7 @@ Show Which Branch
 
 Simply Copy the contents from the bash_profile into your actual .bash_profile
 
+###
+Spell check
+
+I use this script on my commit messages
