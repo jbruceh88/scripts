@@ -24,4 +24,4 @@ Simply Copy the contents from the bash_profile into your actual .bash_profile
 ###
 Spell check
 
-I use this script on my commit messages
+In commit-msg there is a link to the spell check script I use
