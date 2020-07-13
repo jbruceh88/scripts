@@ -15,3 +15,9 @@ Once moved into this folder, allow the file to be executable `chmod +x`
 Pre-commit
 
 This hook can be by passed by using the `--no-verify` option, or just `-n`
+
+###
+Show Which Branch
+
+Simply Copy the contents from the bash_profile into your actual .bash_profile
+
